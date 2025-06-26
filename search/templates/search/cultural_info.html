@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorateur Culturel Camerounais (IA)</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { color: #0056b3; }
+        form { margin-bottom: 20px; }
+        textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #218838; }
+        .response-box { background-color: #e9ecef; padding: 15px; border-radius: 4px; border: 1px solid #ced4da; margin-top: 20px; white-space: pre-wrap; word-wrap: break-word; }
+        .error-message { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ask me about Cameroonian Culture!</h1>
+        <p>Posez-moi des questions sur les faits culturels, les origines des peuples, ethnies et cultures du Cameroun.</p>
+
+        <form method="post">
+            {% csrf_token %} {# C'est essentiel pour la sécurité dans Django #}
+            <label for="user_query_text">Votre question :</label><br>
+            <textarea id="user_query_text" name="user_query_text" rows="4" placeholder="Ex: Quelles sont les origines du peuple Bamoun ? Ou, Parlez-moi des traditions Bassa." required>{{ user_query }}</textarea><br>
+            <button type="submit">Obtenir une explication IA</button>
+        </form>
+
+        {% if cultural_explanation %}
+            <h2>Réponse de l'IA :</h2>
+            <div class="response-box">
+                <p>{{ cultural_explanation }}</p>
+            </div>
+        {% elif user_query %} {# Si user_query est présent mais pas d'explication, c'est qu'il y a eu une erreur #}
+            <div class="error-message">
+                <p>Désolé, une erreur est survenue ou l'IA n'a pas pu générer une réponse. Veuillez réessayer ou reformuler votre question.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
