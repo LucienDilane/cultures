@@ -1,0 +1,516 @@
+/* Variables CSS pour les couleurs du Cameroun et autres couleurs primaires */
+:root {
+    --cam-green: #007A5E; /* Vert du drapeau */
+    --cam-yellow: #FCD116; /* Jaune du drapeau */
+    --cam-red: #CE1126; /* Rouge du drapeau */
+    --primary-purple: #9b59b6;   /* Couleur accentuation 1 */
+    --primary-blue: #71b7e6;     /* Couleur accentuation 2 */
+    --text-color: #333;          /* Couleur de texte principale */
+    --light-gray: #f0f2f5;       /* Fond léger pour les éléments */
+    --border-color: #ddd;        /* Couleur des bordures d'input */
+    --card-shadow: rgba(0, 0, 0, 0.1); /* Ombre des boîtes */
+}
+
+/* Styles généraux du corps de la page */
+body {
+    font-family: 'Poppins', sans-serif; /* Police de caractère */
+    display: flex; /* Utilise flexbox pour centrer le contenu */
+    justify-content: center; /* Centrage horizontal */
+    align-items: center; /* Centrage vertical */
+    min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    margin: 0;
+    /* Dégradé de fond inspiré des couleurs du Cameroun */
+    background: linear-gradient(135deg, var(--cam-green), var(--cam-red), var(--cam-yellow));
+    overflow: hidden; /* Empêche le défilement indésirable, CRUCIAL pour l'animation */
+    color: var(--text-color); /* Couleur de texte par défaut */
+}
+
+/* Conteneur principal englobant l'image et les formulaires */
+.main-container {
+    display: flex; /* Flexbox pour aligner l'image et le formulaire côte à côte */
+    width: 1000px; /* **AGRANDI:** Nouvelle largeur par défaut */
+    max-width: 95%; /* Maximum 95% de la largeur de l'écran sur petits écrans */
+    height: 650px; /* **AGRANDI:** Nouvelle hauteur par default */
+    background-color: #fff; /* Fond blanc */
+    border-radius: 15px; /* Coins arrondis */
+    box-shadow: 0 10px 40px var(--card-shadow); /* Ombre portée */
+    overflow: hidden; /* Cache le contenu qui déborde (essentiel pour le glissement des formulaires) */
+    position: relative; /* TRÈS IMPORTANT: pour positionner les enfants absolument */
+}
+
+/* Section de l'image de fond (partie gauche) */
+.image-section {
+    width: 40%; /* **RÉDUIT:** Occupe 40% de la largeur du main-container */
+    height: 100%;
+    position: absolute; /* Positionne absolument par rapport à main-container */
+    top: 0;
+    left: 0; /* Position initiale: à gauche */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff; /* Texte blanc sur l'image */
+    text-align: center;
+    /* Transition pour l'opacité et le mouvement */
+    transition: transform 0.6s ease-in-out; /* Ajout de la transition sur transform */
+    z-index: 2; /* S'assure qu'il est au-dessus du form-container avant le mouvement */
+}
+
+/* Réduire la section image quand le formulaire d'inscription est actif */
+.main-container.show-register .image-section {
+    transform: translateX(150%); /* Déplace l'image de 150% de sa propre largeur (40% * 1.5 = 60%) pour que le form-container apparaisse */
+}
+
+
+.image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recouvre la zone sans déformer l'image */
+    filter: brightness(0.7); /* Assombrit l'image pour une meilleure lisibilité du texte */
+}
+
+/* Texte superposé sur l'image */
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrage parfait */
+    z-index: 1; /* Assure que le texte est au-dessus de l'image */
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.3); /* Fond semi-transparent pour le texte */
+    border-radius: 10px;
+}
+
+.overlay-text h2 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Ombre pour la lisibilité */
+}
+
+.overlay-text p {
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+/* Conteneur des formulaires (partie droite) */
+.form-container {
+    width: 60%; /* **AGRANDI:** Occupe 60% de la largeur du main-container */
+    height: 100%;
+    position: absolute; /* Positionne absolument par rapport à main-container */
+    top: 0;
+    right: 0; /* Position initiale: à droite */
+    background-color: #fff; /* Fond blanc */
+    overflow: hidden; /* Cacher le débordement des formulaires lors du glissement */
+    transition: transform 0.6s ease-in-out; /* Ajout de la transition sur transform */
+    z-index: 1; /* S'assure qu'il est en dessous de l'image initialement */
+}
+
+/* Agrandir la section formulaire quand le formulaire d'inscription est actif */
+.main-container.show-register .form-container {
+    transform: translateX(-66.666%); /* Déplace le conteneur des formulaires vers la gauche (40% de la largeur totale par rapport à sa propre largeur de 60%) */
+    z-index: 3; /* S'assure qu'il est au-dessus quand il est affiché */
+}
+
+
+/* Wrapper qui contient les deux formulaires (connexion et inscription) côte à côte */
+.form-wrapper {
+    width: 200%; /* Garde 200% pour que chaque form-box prenne 50% de ce wrapper */
+    height: 100%;
+    display: flex; /* Alignement horizontal des formulaires */
+    /* Transition pour l'animation de glissement */
+    transition: transform 0.6s ease-in-out;
+}
+
+/* Boîte individuelle pour chaque formulaire (connexion ou inscription) */
+.form-box {
+    width: 50%; /* Chaque boîte prend 50% du wrapper, donc 100% du conteneur visible */
+    padding: 50px;
+    display: flex;
+    flex-direction: column; /* Empile les éléments du formulaire verticalement */
+    align-items: center; /* Centrage horizontal des éléments du formulaire */
+    text-align: center;
+    box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur/hauteur */
+    height: 100%; /* S'assurer qu'il prend la hauteur de son parent */
+    overflow-y: auto; /* Permet le défilement vertical si le contenu dépasse */
+
+    /* Masquer la scrollbar par défaut sur certains navigateurs (pour un style plus propre) */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Masquer la scrollbar sur Webkit (Chrome, Safari) */
+.form-box::-webkit-scrollbar {
+    display: none;
+}
+
+/* Style de la scrollbar pour les navigateurs Webkit (Chrome, Safari, Edge) si vous voulez la rendre visible et stylée */
+/*
+.form-box::-webkit-scrollbar {
+    width: 8px;
+}
+.form-box::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 10px;
+}
+.form-box::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 10px;
+}
+.form-box::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-purple);
+}
+*/
+
+
+.form-box h2 {
+    margin-bottom: 40px;
+    color: var(--text-color);
+    font-size: 2em;
+}
+
+/* Styles spécifiques au formulaire d'enregistrement (une seule étape) */
+.register form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Disposition des champs dans le formulaire */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    gap: 20px; /* Espace entre les input-group dans une même rangée */
+}
+
+.form-row .input-group {
+    flex: 1; /* Chaque input-group prend une part égale de l'espace */
+    min-width: 45%; /* S'assure qu'ils ne deviennent pas trop petits */
+    margin-bottom: 0; /* Pas de marge additionnelle si dans form-row */
+}
+
+/* Groupe d'input générique */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+    width: 100%; /* Par défaut, occupe toute la largeur disponible */
+}
+
+.input-group.full-width {
+    width: 100%; /* Force la largeur complète si la classe est présente */
+}
+
+.input-group .icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 1.1em;
+    pointer-events: none; /* L'icône ne bloque pas les clics sur l'input */
+}
+
+.input-group input,
+.input-group select {
+    width: calc(100% - 60px); /* Ajustement pour l'icône et le padding */
+    height: 45px; /* Hauteur fixe pour un meilleur alignement de l'icône */
+    padding: 0 12px 0 45px; /* Padding vertical ajusté, padding-left pour l'icône */
+    line-height: 45px; /* Centrer le texte verticalement */
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    font-size: 1em;
+    outline: none; /* Supprime le contour bleu au focus */
+    transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur */
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+    border-color: var(--primary-blue); /* Couleur de bordure au focus */
+}
+
+/* Styles spécifiques aux zones de texte */
+.input-group textarea {
+    width: calc(100% - 60px);
+    resize: vertical; /* Permet le redimensionnement vertical */
+    min-height: 80px; /* Garde une hauteur minimale */
+    padding: 15px 12px 12px 45px; /* Padding pour textarea */
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Styles spécifiques aux listes déroulantes */
+.input-group select {
+    appearance: none; /* Supprime l'apparence native */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    /* Flèche personnalisée pour le select */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2C197.3c-2.9%2C-2.9-7.7%2C-2.9-10.6%2C0l-131.7%2C131.7c-2.9%2C2.9-7.7%2C2.9-10.6%2C0l-131.7%2C-131.7c-2.9%2C-2.9-7.7%2C-2.9-10.6%2C0s-2.9%2C7.7%2C0%2C10.6l131.7%2C131.7c2.9%2C2.9%2C7.7%2C2.9%2C10.6%2C0l131.7%2C-131.7C289.9%2C205%2C289.9%2C200.2%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 1em;
+    cursor: pointer;
+}
+
+/* Styles pour les inputs de type "file" (photo de profil) */
+.input-group input[type="file"] {
+    opacity: 0; /* Rend l'input invisible */
+    position: absolute;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+}
+
+.input-group .file-label {
+    display: block;
+    width: calc(100% - 20px); /* Adapte la largeur */
+    padding: 12px 15px 12px 45px;
+    background-color: var(--light-gray);
+    border: 1px dashed var(--border-color); /* Bordure en pointillés */
+    border-radius: 25px;
+    cursor: pointer;
+    text-align: left;
+    color: #666;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
+.input-group .file-label:hover {
+    background-color: #e0e0e0;
+}
+
+/* Styles pour les boutons de soumission */
+.login button[type="submit"] {
+    width: 80%; /* Largeur par défaut des boutons */
+    padding: 15px;
+    margin-top: 30px; /* Espace au-dessus du bouton */
+    background-image: linear-gradient(to right, var(--primary-blue), var(--primary-purple)); /* Dégradé de couleur */
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.login button[type="submit"]:hover {
+    transform: translateY(-3px); /* Petit effet de soulèvement au survol */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.register button[type="submit"] {
+    width: 80%; /* Largeur par défaut des boutons */
+    padding: 15px;
+    margin-top: 20px; /* Espace au-dessus du bouton */
+    background-image: linear-gradient(to right, var(--primary-blue), var(--primary-purple)); /* Dégradé de couleur */
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.register button[type="submit"]:hover {
+    transform: translateY(-3px); /* Petit effet de soulèvement au survol */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Texte pour basculer entre les formulaires (ex: "Pas encore de compte ? S'inscrire") */
+.switch-form-text {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #666;
+    /* Assure que ces éléments sont toujours visibles */
+    position: relative; /* Très important pour que z-index soit applicable */
+    z-index: 10; /* Valeur élevée pour s'assurer qu'ils sont au-dessus de tout le reste */
+    display: block; /* S'assure qu'il prend toute la largeur disponible */
+    width: 100%; /* S'assure qu'il est bien contraint par son parent */
+}
+
+.switch-form-text a {
+    color: var(--primary-purple);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    /* Ajoutez ceci pour vous assurer qu'il n'est pas masqué par un background */
+    display: inline-block; /* Ou block, selon le besoin de layout */
+}
+
+.switch-form-text a:hover {
+    color: var(--primary-blue);
+    text-decoration: underline;
+}
+
+/* --- Styles pour l'animation de bascule (avec proportions ajustées) --- */
+
+/* État initial (formulaire de connexion visible) */
+.main-container .image-section {
+    transform: translateX(0);
+}
+.main-container .form-container {
+    transform: translateX(0);
+}
+.main-container .form-wrapper {
+    transform: translateX(0); /* Le premier formulaire (login) est visible */
+}
+
+
+/* État "show-register" (quand la classe est ajoutée au main-container par JS) */
+
+/* L'image section glisse de sa largeur vers la droite (pour laisser place au formulaire) */
+.main-container.show-register .image-section {
+    transform: translateX(150%);
+}
+
+/* Le form-container glisse de 100% de sa largeur vers la gauche */
+.main-container.show-register .form-container {
+    transform: translateX(-66.666%);
+}
+
+/* Le form-wrapper à l'intérieur du form-container glisse de 50% vers la gauche */
+.main-container.show-register .form-wrapper {
+    transform: translateX(-50%);
+}
+
+
+/* Styles pour les messages d'erreur généraux */
+.form-errors {
+    color: var(--cam-red);
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.05);
+    border: 1px solid var(--cam-red);
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Styles pour les messages d'erreur spécifiques aux champs */
+.field-errors {
+    color: var(--cam-red);
+    font-size: 0.8em;
+    list-style: none; /* Enlève les puces */
+    padding: 0;
+    margin-top: 5px;
+    text-align: left;
+    width: 100%;
+}
+
+.field-errors li {
+    margin-bottom: 3px;
+}
+
+/* Media Queries pour la responsivité (adaptation aux différentes tailles d'écran) */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column; /* Empile l'image et les formulaires verticalement */
+        width: 90%;
+        height: auto; /* Permet au conteneur de s'ajuster en hauteur */
+        position: static; /* Retire le positionnement absolu pour le flux normal */
+        transition: none; /* Supprime toute transition de taille sur mobile pour éviter les glitchs */
+    }
+
+    .image-section {
+        position: static; /* Retire le positionnement absolu */
+        width: 100%; /* Prend toute la largeur disponible */
+        height: 300px; /* Hauteur plus confortable pour l'image sur mobile */
+        transform: translateX(0) !important; /* Force l'image à rester en place */
+        order: 1; /* S'assure que l'image est en premier */
+        transition: none; /* Supprime la transition de transform sur mobile */
+    }
+    .image-section img {
+        height: 100%;
+        object-fit: cover; /* Conserver l'aspect cover */
+    }
+
+    .form-container {
+        position: static; /* Retire le positionnement absolu */
+        width: 100%; /* Prend toute la largeur disponible */
+        height: auto; /* Hauteur auto pour les formulaires */
+        transform: translateX(0) !important; /* Force le conteneur à rester en place */
+        order: 2; /* S'assure que les formulaires sont en second */
+        transition: none; /* Supprime la transition de transform sur mobile */
+    }
+
+    .form-wrapper {
+        width: 100%; /* Le wrapper prend la largeur de son parent */
+        transform: translateX(0) !important; /* Force le wrapper à rester en place */
+        flex-direction: column; /* Empile les formulaires verticalement */
+        transition: none; /* Supprime la transition de transform sur mobile */
+    }
+
+    .form-box {
+        width: 100%; /* Chaque formulaire prend toute la largeur */
+        padding: 30px 20px;
+        min-height: auto; /* Ajuster la hauteur automatiquement */
+        justify-content: flex-start; /* Aligner en haut */
+        overflow-y: auto; /* La scrollbar est gérée ici si le contenu est trop long */
+        height: auto; /* Permet à la hauteur de s'adapter si le contenu est court, tout en permettant le défilement */
+        max-height: 80vh; /* Définit une hauteur maximale pour que la scrollbar apparaisse sur les petits écrans */
+    }
+
+    /* Afficher/cacher les formulaires en fonction de la classe show-register */
+    .form-box.login {
+        display: block; /* Toujours visible par défaut sur mobile pour le login */
+    }
+    .main-container.show-register .form-box.login {
+        display: none; /* Caché quand on est en mode inscription */
+    }
+    .form-box.register {
+        display: none; /* Caché par défaut sur mobile pour l'inscription */
+    }
+    .main-container.show-register .form-box.register {
+        display: block; /* Visible quand on est en mode inscription */
+    }
+
+    /* **AJOUTS/MODIFICATIONS POUR ASSURER LA VISIBILITÉ DU LIEN DE CONNEXION/INSCRIPTION** */
+    /* Assurez-vous que le texte du switch-form-text est toujours visible et au-dessus */
+    .switch-form-text {
+        margin-top: 20px; /* Ajustez la marge si nécessaire pour ne pas être collé au bouton */
+        text-align: center; /* Centrer le texte */
+        z-index: 10; /* Maintenez un z-index élevé */
+        position: relative; /* Nécessaire pour z-index */
+        color: #666; /* Couleur de texte par défaut */
+    }
+    .switch-form-text a {
+        display: inline; /* Les liens sont inline par défaut, assurez-vous qu'ils le restent */
+        /* Ou 'inline-block' si vous voulez leur donner de la hauteur/padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .image-section {
+        height: 200px; /* Encore plus petit sur les très petits écrans */
+    }
+    .form-box {
+        padding: 20px 15px;
+    }
+    .form-box h2 {
+        font-size: 1.8em;
+    }
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+        font-size: 0.9em;
+        padding: 10px 10px 10px 40px;
+    }
+    .input-group .icon {
+        left: 10px;
+    }
+    .switch-form-text {
+        font-size: 0.8em;
+    }
+}

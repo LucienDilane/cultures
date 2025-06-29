@@ -1,0 +1,56 @@
+{% load static %}
+
+<div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="{% url 'accueil' %}" class="logo d-flex align-items-center">
+            <span class="sitename">Culture Connect</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>Explorer la diversité culturelle camerounaise</p>
+            <p class="mt-3"><strong>Téléphone:</strong> <span>+237 6XX XX XX XX</span></p> {# Numéro mis à jour #}
+            <p><strong>Email:</strong> <span>contact@cultureconnect.cm</span></p> {# Email mis à jour #}
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Liens Utiles</h4>
+          <ul>
+            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'accueil' %}#about">À propos</a></li>
+            <li><a href="#">Explorer les Cultures</a></li> {# Exemple de lien #}
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Ressources</h4>
+          <ul>
+            <li><a href="#">Articles</a></li>
+            <li><a href="#">Galeries Photo</a></li>
+            <li><a href="#">Vidéos</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Rejoignez notre Newsletter</h4>
+          <p>Recevez les dernières nouvelles et découvertes culturelles directement dans votre boîte mail.</p>
+          <form action="" method="post" class="php-email-form">
+            <input type="email" name="email" placeholder="Votre Email"><input type="submit" value="S'abonner">
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Cameroon Culture Connect</strong> <span>Tous Droits Réservés</span></p>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>

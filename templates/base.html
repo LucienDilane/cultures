@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title%} All-Culture {% endblock %}</title>
+  <meta name="description" content="Découvrez, partagez et échangez sur la richesse des cultures camerounaises.">
+  <meta name="keywords" content="culture, Cameroun, échange culturel, traditions, arts, ethnies, histoire, patrimoine">
+
+  <link href="{% static 'cultures/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'cultures/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <link href="{% static 'cultures/css/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'cultures/css/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'cultures/css/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'cultures/css/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'cultures/css/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <link href="{% static 'cultures/css/main.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'cultures/css/ia.css' %}">
+  {% block link %} {% endblock %}
+
+  </head>
+
+<body class="index-page">
+
+{% block header %}
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'accueil' %}" class="logo d-flex align-items-center me-auto me-xl-0">
+        {# Suggestion: Utiliser un logo image ici pour le branding culturel #}
+        {# <img src="{% static 'cultures/img/logo_culture.png' %}" alt="Logo Culture"> #}
+        <h1 class="sitename">Culture Connect</h1> {# Nom du site #}
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'accueil' %}" class="active">Accueil</a></li>
+          <li><a href="#about">A propos</a></li>
+          <li><a href="#ai-section">Notre IA Culturelle</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Explorer les Cultures</a></li>
+          <li><a href="#">Forum Communautaire</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="{% url 'connect' %}">Se connecter / S'inscrire</a> {# CTA mis à jour #}
+
+    </div>
+  </header>{% endblock %}
+
+{% block content%}{% endblock %}
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <a href="{% url 'search' %}" class="ai-fab" title="Parler à notre IA Culturelle">
+    <i class="bi bi-robot"></i> {# Icône de robot pour l'IA #}
+  </a>
+
+  <script src="{% static 'cultures/js/bootstrap/js/bootstrap.bundle.min.js' %}" async></script>
+  <script src="{% static 'cultures/js/php-email-form/validate.js' %}" async></script>
+  <script src="{% static 'cultures/js/aos/aos.js' %}" async></script>
+  <script src="{% static 'cultures/js/glightbox/js/glightbox.min.js' %}" async></script>
+  <script src="{% static 'cultures/js/swiper/swiper-bundle.min.js' %}" async></script>
+  <script src="{% static 'cultures/js/purecounter/purecounter_vanilla.js' %}" async></script>
+
+  <script src="{% static 'cultures/js/main.js' %}" async></script>
+
+
+</body>
+
+</html>

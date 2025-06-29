@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Mon Profil | All-Culture Cameroon {% endblock %}
+{% block link %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'user/css/profile_style.css' %}">
+{% endblock%}
+
+    {% block header %}
+    <header class="navbar">
+        <div class="container">
+            <h1 class="logo"><a href="#">CultureCM</a></h1>
+            <nav>
+                <ul>
+                    {# Ajoutez la classe 'nav-link-section' et 'data-target-section' #}
+                    <li><a href="#" class="nav-link-section" data-target-section="home"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="#events-list" class="nav-link-section" data-target-section="events-list"><i class="fas fa-calendar-alt"></i> Événements</a></li>
+                    <li><a href="#blogs-list" class="nav-link-section" data-target-section="blogs-list"><i class="fas fa-blog"></i> Blogs</a></li>
+                    {# Retirez la classe 'active' initiale, elle sera gérée par JS #}
+                    <li><a href="#profile-info" class="nav-link-section" data-target-section="profile-info"><i class="fas fa-user-circle"></i> Mon Profil</a></li>
+                    <li><a href="#" class="nav-link-section" data-target-section="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>{% endblock %}
+{% block content %}
+    <main class="container profile-page">
+
+        {# Section Profil Utilisateur #}
+        {# Ajoutez la classe 'content-section' et rendez-la active par défaut pour le chargement initial #}
+        <section id="profile-info" class="card profile-overview content-section active">
+            <div class="profile-header">
+                <img src="{% static 'user/images/default_avatar.png' %}" alt="Photo de profil" class="profile-avatar">
+                <div>
+                    <h2 id="user-fullname">Nom Prénom Utilisateur</h2>
+                    <p class="profile-username" id="user-username">@nom_utilisateur</p>
+                    <p class="profile-email" id="user-email"><i class="fas fa-envelope"></i> email@example.com</p>
+                    <p class="profile-phone" id="user-phone"><i class="fas fa-phone"></i> +237 6XXXXXXXX</p>
+                    <p class="profile-location" id="user-location"><i class="fas fa-map-marker-alt"></i> Ville, Région</p>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <button class="btn btn-primary"><i class="fas fa-edit"></i> Modifier le profil</button>
+                <button class="btn btn-secondary"><i class="fas fa-key"></i> Changer le mot de passe</button>
+            </div>
+        </section>
+
+        {# Section Créer un Événement - Ajoutez la classe 'content-section' #}
+        <section id="create-event" class="card content-section">
+            <h2><i class="fas fa-plus-circle"></i> Créer un nouvel événement</h2>
+            <form action="#" method="post" id="eventForm">
+                {% csrf_token %} {# Ceci est important pour Django #}
+                <div class="form-group">
+                    <label for="event-title">Titre de l'événement</label>
+                    <input type="text" id="event-title" name="title" placeholder="Ex: Festival culturel de Douala" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-description">Description</label>
+                    <textarea id="event-description" name="description" rows="4" placeholder="Détails de l'événement..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Date de l'événement</label>
+                    <input type="date" id="event-date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-time">Heure de l'événement</label>
+                    <input type="time" id="event-time" name="time">
+                </div>
+                <div class="form-group">
+                    <label for="event-location">Lieu</label>
+                    <input type="text" id="event-location" name="location" placeholder="Ex: Centre culturel français">
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Publier l'événement</button>
+            </form>
+        </section>
+
+        {# Section Événements Disponibles - Ajoutez la classe 'content-section' #}
+        <section id="events-list" class="card content-section">
+            <h2><i class="fas fa-list-alt"></i> Événements disponibles</h2>
+            <div class="events-grid">
+                {# Exemple d'un événement #}
+                <div class="event-item">
+                    <h3 class="event-title">Carnaval de Kribi</h3>
+                    <p class="event-details"><i class="fas fa-calendar-day"></i> 15 Août 2025</p>
+                    <p class="event-details"><i class="fas fa-clock"></i> 14:00 - 18:00</p>
+                    <p class="event-details"><i class="fas fa-map-marker-alt"></i> Plage de Kribi</p>
+                    <p class="event-description">Célébration annuelle avec des défilés et des danses traditionnelles.</p>
+                    <button class="btn btn-join"><i class="fas fa-check-circle"></i> Participer</button>
+                </div>
+                <div class="event-item">
+                    <h3 class="event-title">Festival du Ndop</h3>
+                    <p class="event-details"><i class="fas fa-calendar-day"></i> 22 Septembre 2025</p>
+                    <p class="event-details"><i class="fas fa-clock"></i> Toute la journée</p>
+                    <p class="event-details"><i class="fas fa-map-marker-alt"></i> Bafoussam</p>
+                    <p class="event-description">Découvrez l'art du tissu Ndop et la culture Bamiléké.</p>
+                    <button class="btn btn-join"><i class="fas fa-check-circle"></i> Participer</button>
+                </div>
+                {# D'autres événements seront ajoutés ici via Django ou JavaScript #}
+            </div>
+            <button class="btn btn-secondary load-more-btn"><i class="fas fa-arrow-down"></i> Charger plus d'événements</button>
+        </section>
+
+        {# Section Blog de l'Utilisateur (Mes articles) - Ajoutez la classe 'content-section' #}
+        <section id="my-blogs" class="card content-section">
+            <h2><i class="fas fa-book-open"></i> Mes articles de blog</h2>
+            <div class="blog-list">
+                {# Exemple d'un article de blog de l'utilisateur #}
+                <div class="blog-item">
+                    <h3 class="blog-title">Mon voyage à Foumban</h3>
+                    <p class="blog-meta">Publié le 10 Juin 2025 par @nom_utilisateur</p>
+                    <p class="blog-excerpt">Récit de mon exploration du palais royal de Foumban et de l'art Bamoun...</p>
+                    <a href="#" class="btn btn-view"><i class="fas fa-eye"></i> Voir l'article</a>
+                    <button class="btn btn-edit"><i class="fas fa-edit"></i> Modifier</button>
+                    <button class="btn btn-delete"><i class="fas fa-trash-alt"></i> Supprimer</button>
+                </div>
+                {# D'autres articles de l'utilisateur seront ajoutés ici #}
+            </div>
+            <button class="btn btn-primary create-blog-btn"><i class="fas fa-plus"></i> Écrire un nouvel article</button>
+            <button class="btn btn-secondary load-more-btn"><i class="fas fa-arrow-down"></i> Charger plus d'articles</button>
+        </section>
+
+        {# Section Tous les Blogs Disponibles - Ajoutez la classe 'content-section' #}
+        <section id="blogs-list" class="card content-section">
+            <h2><i class="fas fa-globe"></i> Tous les blogs disponibles</h2>
+            <div class="blog-list">
+                {# Exemple d'un article de blog général #}
+                <div class="blog-item">
+                    <h3 class="blog-title">La gastronomie camerounaise : un délice !</h3>
+                    <p class="blog-meta">Publié le 05 Juin 2025 par @autre_utilisateur</p>
+                    <p class="blog-excerpt">Un tour d'horizon des plats incontournables du Cameroun...</p>
+                    <a href="#" class="btn btn-view"><i class="fas fa-eye"></i> Voir l'article</a>
+                </div>
+                 <div class="blog-item">
+                    <h3 class="blog-title">Les forêts équatoriales du Cameroun</h3>
+                    <p class="blog-meta">Publié le 18 Mai 2025 par @explorateur</p>
+                    <p class="blog-excerpt">Découvrez la biodiversité unique de nos forêts...</p>
+                    <a href="#" class="btn btn-view"><i class="fas fa-eye"></i> Voir l'article</a>
+                </div>
+                {# D'autres blogs généraux seront ajoutés ici #}
+            </div>
+            <button class="btn btn-secondary load-more-btn"><i class="fas fa-arrow-down"></i> Charger plus de blogs</button>
+        </section>
+
+    </main>
+     {% include 'cultures/portions/footer.html'%}
+
+    {# Assurez-vous que ce script est chargé après les éléments HTML qu'il manipule #}
+    <script src="{% static 'user/js/profile_script.js' %}"></script>
+{% endblock %}

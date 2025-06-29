@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -120,13 +121,24 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Douala'
 
 USE_I18N = True
 
 USE_TZ = True
+
+LANGUAGES = [
+    ('fr', 'Français'),
+    ('en', 'English'),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale', # Recommandé pour les traductions globales du projet
+    # Ou pour chaque app: BASE_DIR / 'mon_app' / 'locale',
+]
+
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL='media/'

@@ -1,0 +1,47 @@
+    .ai-fab {
+        position: fixed;
+        bottom: 20px; /* Adjust as needed */
+        left: 20px; /* Adjust as needed */
+        z-index: 1000;
+        background-color: var(--bs-primary); /* Uses your Bootstrap primary color */
+        color: white;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        text-decoration: none; /* Remove underline */
+    }
+
+    .ai-fab:hover {
+        transform: scale(1.1);
+        background-color: var(--bs-primary-rgb); /* Darker shade on hover */
+        color: white; /* Ensure text color remains white on hover */
+    }
+
+    .ai-fab i {
+        font-size: 28px;
+    }
+
+    /* Style for the hero image container to enable overflow hidden for zoom effect */
+    .hero-image {
+        overflow: hidden; /* Caches overflow from the slightly zoomed image */
+        border-radius: 0.5rem; /* Matches Bootstrap's rounded-4 */
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Adds a subtle shadow */
+    }
+
+    /* Style for the hero image itself */
+    .hero-image img {
+        transform: scale(1.03); /* Apply a slight zoom to the image */
+        transition: transform 0.3s ease-in-out; /* Smooth transition for potential hover effects */
+        object-fit: cover; /* Ensures the image covers the area without distortion, cropping if needed */
+        width: 100%; /* Ensures it fills its container */
+        height: 100%; /* Ensures it fills its container */
+    }
+
+    .info-wrap{
+        display:none;
+    }
