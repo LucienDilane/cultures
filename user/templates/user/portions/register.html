@@ -1,0 +1,68 @@
+<h2>Inscription</h2>
+<div id="registerFormErrors" class="form-errors" style="display:none;"></div>
+                    <form action="{% url 'register_user' %}" method="post" id="registerForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="input-group">
+                                <span class="icon"><i class="fas fa-user"></i></span>
+                                <input type="text" name="first_name" placeholder="Nom" required>
+                                <ul class="field-errors" id="first_name_errors"></ul>
+                            </div>
+                            <div class="input-group">
+                                <span class="icon"><i class="fas fa-user"></i></span>
+                                <input type="text" name="last_name" placeholder="Prenom" required>
+                                <ul class="field-errors" id="last_name_errors"></ul>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <span class="icon"><i class="fas fa-user-alt"></i></span>
+                                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                                <ul class="field-errors" id="username_errors"></ul>
+                            </div>
+                            <div class="input-group">
+                                <span class="icon"><i class="fas fa-envelope"></i></span>
+                                <input type="email" name="email" placeholder="Email" required>
+                                <ul class="field-errors" id="email_errors"></ul>
+                            </div>
+                        </div>
+
+                        <div class="input-group full-width">
+                            <span class="icon"><i class="fas fa-phone-alt"></i></span>
+                            <input type="tel" maxlength="9" name="phone_number" placeholder="Numéro de téléphone (ex: 6XXXXXXXX)" required>
+                            <ul class="field-errors" id="phone_number_errors"></ul>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <span class="icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <select name="region_of_origin" id="regionSelect" required>
+                                    <option value="">Chargement des régions...</option>
+                                </select>
+                                <ul class="field-errors" id="region_of_origin_errors"></ul>
+                            </div>
+                            <div class="input-group">
+                                <span class="icon"><i class="fas fa-city"></i></span>
+                                <select name="department_of_origin" id="departmentSelect" required disabled>
+                                    <option value="">Sélectionnez votre Département</option>
+                                </select>
+                                <ul class="field-errors" id="department_of_origin_errors"></ul>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <span class="icon"><i class="fas fa-lock"></i></span>
+                                <input type="password" name="password" placeholder="Mot de passe" id="password" required>
+                                <ul class="field-errors" id="password_errors"></ul>
+                            </div>
+                            <div class="input-group">
+                                <span class="icon"><i class="fas fa-lock"></i></span>
+                                <input type="password" name="password2" placeholder="Confirmer le mot de passe" id="password2" required>
+                                <ul class="field-errors" id="password2_errors"></ul>
+                            </div>
+                        </div>
+                        <button type="submit">S'inscrire</button>
+                        <p class="switch-form-text">Vous avez déjà un compte ? <a href="#" id="showLogin">Se connecter</a></p>
+                    </form>

@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'search',
     'cultures',
     'forum',
-    'chat',
     'blog',
 ]
 
@@ -117,6 +116,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Dans votre fichier settings.py
+AUTH_USER_MODEL = 'user.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -128,16 +129,6 @@ TIME_ZONE = 'Africa/Douala'
 USE_I18N = True
 
 USE_TZ = True
-
-LANGUAGES = [
-    ('fr', 'Français'),
-    ('en', 'English'),
-]
-
-LOCALE_PATHS = [
-    BASE_DIR / 'locale', # Recommandé pour les traductions globales du projet
-    # Ou pour chaque app: BASE_DIR / 'mon_app' / 'locale',
-]
 
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')

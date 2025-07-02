@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
         register: {
             title: 'Rejoignez-nous !',
             description: 'Créez votre compte en quelques étapes.'
-            // NOUS ALLONS AJOUTER LE LIEN DIRECTEMENT DANS showRegisterForm POUR PLUS DE FLEXIBILITÉ
         }
     };
 
@@ -36,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Mettre à jour l'image et le texte pour l'inscription
         dynamicImage.src = images.register;
         dynamicTitle.textContent = texts.register.title;
-        // MODIFICATION ICI: Utilisation de innerHTML pour inclure le lien
-        dynamicText.innerHTML = texts.register.description + '<br><br>Vous avez déjà un compte ? Conectez-vous';
+        // MODIFICATION ICI: Utilisation de innerHTML pour inclure le lien CORRECTEMENT
+        dynamicText.innerHTML = texts.register.description + '<br><br>Vous avez déjà un compte ? <a href="#" id="imageShowLoginLink">Connectez-vous</a>';
 
         // Important : Attacher l'écouteur d'événements au nouveau lien dans l'image
         // Il faut s'assurer que l'élément existe avant d'attacher l'écouteur.
@@ -65,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateContainerHeight(); // Ajuster la hauteur après le changement de formulaire
     }
 
-    // Fonction pour ajuster la hauteur du main-container (AJOUTÉE/AMÉLIORÉE)
+    // Fonction pour ajuster la hauteur du main-container
     function updateContainerHeight() {
         // Déterminer quel formulaire est actuellement visible (sans l'animation de transition)
         const isRegisterActive = mainContainer.classList.contains('show-register');
@@ -73,8 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (activeFormBox) {
             // Obtenir la hauteur réelle du contenu du formulaire actif
-            // Utiliser scrollHeight pour obtenir la hauteur complète du contenu
-            // Ajouter un padding supplémentaire pour le confort visuel
             const newHeight = activeFormBox.scrollHeight + 80; // Ajustez 80px si nécessaire
             mainContainer.style.height = `${newHeight}px`;
         } else {
@@ -97,24 +94,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- Gestion de la validation du formulaire d'inscription (simulée) ---
+    // --- Gestion de la validation du formulaire d'inscription ---
     const registerForm = document.getElementById('registerForm');
     const registerFormErrorsDiv = document.getElementById('registerFormErrors');
+    const passwordInput = document.getElementById('password');
+    const password2Input = document.getElementById('password2');
+    const password2ErrorsUl = document.getElementById('password2_errors');
+    const registerSubmitButton = registerForm ? registerForm.querySelector('button[type="submit"]') : null;
+
 
     function validateRegisterForm() {
         let isValid = true;
         const formData = new FormData(registerForm);
         const errors = {}; // Stocker les erreurs par champ
 
-        // Réinitialiser les messages d'erreur
+        // Réinitialiser les messages d'erreur du formulaire
         if (registerFormErrorsDiv) {
             registerFormErrorsDiv.style.display = 'none';
             registerFormErrorsDiv.innerHTML = '';
         }
         document.querySelectorAll('.field-errors').forEach(ul => ul.innerHTML = '');
 
-        // Exemples de validation côté client (à adapter/compléter)
-        // Note: une validation robuste doit toujours être effectuée côté serveur aussi.
+        // --- Réinitialiser le contenu dynamique de l'image si aucune erreur n'était affichée ---
+        dynamicTitle.textContent = texts.register.title;
+        dynamicText.innerHTML = texts.register.description + '<br><br>Vous avez déjà un compte ? <a href="#" id="imageShowLoginLink">Connectez-vous</a>';
+
+
+        // Exemples de validation côté client
         if (formData.get('first_name').trim() === '') {
             errors.first_name = ['Le prénom est requis.'];
             isValid = false;
@@ -154,87 +160,88 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Afficher les erreurs
         if (!isValid) {
+            let errorHtml = '';
             for (const field in errors) {
                 const ul = document.getElementById(`${field}_errors`);
                 if (ul) {
+                    ul.innerHTML = ''; // Clear previous errors
                     errors[field].forEach(error => {
                         const li = document.createElement('li');
                         li.textContent = error;
                         ul.appendChild(li);
                     });
                 }
+                // Ajouter les erreurs à la liste pour l'affichage sur l'image
+                errors[field].forEach(error => {
+                    errorHtml += `<p style="color: red; margin: 5px 0;">${error}</p>`;
+                });
             }
+
+            // Afficher le message d'erreur général dans le formulaire
             if (registerFormErrorsDiv) {
                 registerFormErrorsDiv.style.display = 'block';
-                registerFormErrorsDiv.innerHTML = '<p>Veuillez corriger les erreurs avant de soumettre.</p>';
+                registerFormErrorsDiv.innerHTML = '<p style="color: red;">Veuillez corriger les erreurs avant de soumettre.</p>';
             }
+
+            // --- NOUVEAU : Remplacer le texte sur l'image par les erreurs ---
+            dynamicTitle.textContent = 'Erreurs d\'inscription !';
+            dynamicText.innerHTML = errorHtml; // Insérer toutes les erreurs collectées
+            // Si vous voulez conserver le lien "Connectez-vous" après les erreurs, ajoutez-le ici:
+            // dynamicText.innerHTML += '<br><br><p style="color: gray;">Vous avez déjà un compte ? <a href="#" id="imageShowLoginLink" style="color: gray;">Connectez-vous</a></p>';
+            // et n'oubliez pas de rattacher l'écouteur d'événements comme dans showRegisterForm()
+
+
         }
         return isValid;
     }
 
+    // New: Password matching validation
+    function checkPasswordMatch() {
+        if (!passwordInput || !password2Input || !password2ErrorsUl || !registerSubmitButton) return;
+
+        const password = passwordInput.value;
+        const password2 = password2Input.value;
+
+        password2ErrorsUl.innerHTML = ''; // Clear previous errors
+
+        if (password !== password2 && password2 !== '') {
+            const li = document.createElement('li');
+            li.textContent = 'Les mots de passe ne correspondent pas.';
+            li.style.color = 'red'; // Set text color to red
+            password2ErrorsUl.appendChild(li);
+            registerSubmitButton.disabled = true; // Disable submit button
+        } else {
+            registerSubmitButton.disabled = false; // Enable submit button if passwords match or password2 is empty
+        }
+
+        // Also check password length here to enable/disable button more accurately
+        if (password.length < 6) {
+            registerSubmitButton.disabled = true;
+        }
+    }
+
+    if (passwordInput && password2Input) {
+        passwordInput.addEventListener('input', checkPasswordMatch);
+        password2Input.addEventListener('input', checkPasswordMatch);
+    }
+    // End New
+
     if (registerForm) {
         registerForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche la soumission par défaut
-
-            /*if (validateRegisterForm()) {
-                alert('Formulaire d\'inscription soumis (simulé) !');
-                // TODO: Intégrer ici la logique d'envoi AJAX réelle vers votre backend Django.
-                // N'oubliez pas d'inclure le jeton CSRF si vous faites une requête POST AJAX.
-                /*
-                fetch(registerForm.action, {
-                    method: 'POST',
-                    body: new FormData(registerForm),
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.success) {
-                        alert('Inscription réussie !');
-                        showLoginForm();
-                    } else {
-                        // Gérer et afficher les erreurs retournées par le serveur
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur réseau lors de la soumission:', error);
-                });
-                */
-                showLoginForm(); // Retourne au login après la soumission simulée
-            } else {
-                if (registerFormErrorsDiv) {
-                    registerFormErrorsDiv.style.display = 'block';
-                    registerFormErrorsDiv.innerHTML = '<p>Veuillez corriger les erreurs avant de soumettre.</p>';
-                }
+            // Empêche la soumission par défaut UNIQUEMENT si la validation côté client échoue
+            if (!validateRegisterForm()) {
+                event.preventDefault();
             }
+            // Si validateRegisterForm() renvoie true, le formulaire sera soumis normalement par le navigateur.
         });
     }
 
-    // Fonction utilitaire pour récupérer le CSRF token (nécessaire pour les requêtes POST AJAX)
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    // --- Gestion du formulaire de connexion (simulé) ---
+    // --- Gestion du formulaire de connexion ---
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche la soumission par défaut
-            alert('Formulaire de connexion soumis (simulé) !');
-            // TODO: Intégrer la logique de connexion réelle ici
+            // Aucune validation côté client ici qui empêcherait la soumission.
+            // Le formulaire sera soumis normalement par le navigateur.
         });
     }
 
@@ -252,19 +259,16 @@ document.addEventListener('DOMContentLoaded', function() {
         departmentsApiUrl = apiEndpointsDiv.dataset.departmentsUrl;
     } else {
         // Fallback si le div api-endpoints n'est pas trouvé
-        // Très important: ajustez ces chemins pour correspondre à vos URLs réelles de Django.
-        // Si votre application est servie sous '/culture/', mettez '/culture/api/regions/' etc.
         console.warn("L'élément #api-endpoints n'a pas été trouvé. Utilisation d'URLs par défaut. " +
                      "Assurez-vous que votre HTML est rendu par Django et contient cet élément, " +
                      "ou ajustez les URLs du fallback pour correspondre à votre configuration Django.");
-        // Exemple si l'app est sous /culture/ et l'API à sa racine:
-        regionsApiUrl = '/culture/api/regions/';
-        departmentsApiUrl = '/culture/api/departments/';
+        regionsApiUrl = '/api/regions/'; // Chemin par défaut si votre API est à la racine
+        departmentsApiUrl = '/api/departments/'; // Chemin par défaut si votre API est à la racine
     }
 
     // Fonction pour charger les régions
     function loadRegions() {
-        if (!regionSelect) return; // Quitter si l'élément n'existe pas
+        if (!regionSelect) return;
 
         regionSelect.innerHTML = '<option value="">Chargement des régions...</option>';
 
@@ -292,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fonction pour charger les départements en fonction de la région sélectionnée
     function loadDepartments(regionId) {
-        if (!departmentSelect) return; // Quitter si l'élément n'existe pas
+        if (!departmentSelect) return;
 
         departmentSelect.innerHTML = '<option value="">Chargement des départements...</option>';
         departmentSelect.disabled = true;
@@ -342,8 +346,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Appel initial pour ajuster la hauteur quand la page est chargée
-    // Un petit délai peut être utile pour s'assurer que tous les éléments sont rendus
     setTimeout(updateContainerHeight, 100);
     // Ajoutez un écouteur pour le redimensionnement de la fenêtre pour ajuster la hauteur
     window.addEventListener('resize', updateContainerHeight);
+
+    // Initial check for password match and button state on page load
+    checkPasswordMatch();
 });
