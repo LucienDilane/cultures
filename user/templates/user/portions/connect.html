@@ -10,7 +10,7 @@
  {% if login_error %}
             <p style="color: red;">{{ login_error }}</p>
         {% endif %}
-                    <form action="{% url 'profil_user' %}" method="post" id="loginForm">
+                    <form action="{% url 'login' %}" method="post" id="loginForm">
                         {% csrf_token %}
                         <div class="input-group">
                             <span class="icon"><i class="fas fa-user"></i></span>

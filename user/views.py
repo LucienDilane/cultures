@@ -191,3 +191,6 @@ def logout_user(request):
     logout(request)
     messages.info(request, 'Vous avez été déconnecté.')
     return redirect('connect')  # Rediriger vers la page de connexionturn render(request,"user/user_profil.html")
+
+def profil_user(request):
+    return render(request,"user/user_profil.html");

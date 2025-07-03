@@ -1,0 +1,215 @@
+/* Import de Google Fonts pour une meilleure typographie (optionnel) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Styles pour la barre de navigation */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #4CAF50 !important; /* Couleur vive pour le nom de la plateforme */
+}
+
+.nav-link {
+    font-weight: 500;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #4CAF50 !important; /* Effet hover */
+}
+
+.nav-link.active {
+    color: #4CAF50 !important; /* Couleur pour le lien actif */
+    border-bottom: 2px solid #4CAF50;
+}
+
+/* Styles pour les sections principales */
+section {
+    padding: 60px 0;
+    margin-bottom: 30px;
+}
+
+/* Accueil / Tableau de bord */
+#accueil {
+    background: linear-gradient(to right, #e0f7fa, #ffffff);
+    padding: 80px 0;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.05);
+}
+
+.feature-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,.15);
+}
+
+.feature-card .card-body {
+    padding: 30px;
+}
+
+.feature-card .card-body i {
+    color: #4CAF50; /* Couleur des icônes des cartes */
+}
+
+/* Section Profil */
+#profil {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.05);
+}
+
+.profile-picture-placeholder {
+    border: 3px solid #4CAF50;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.list-group-item {
+    border-color: #eee;
+}
+
+/* Sections Événements, Blogs, Forum */
+#evenements, #blogs, #forum {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.05);
+}
+
+.event-card, .blog-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover, .blog-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-text-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limite à 3 lignes */
+    -webkit-box-orient: vertical;
+}
+
+.card-text-description.expanded {
+    -webkit-line-clamp: unset; /* Affiche tout */
+}
+
+.forum-topic-item {
+    border-left: 5px solid #4CAF50;
+    transition: background-color 0.2s ease, border-left-color 0.2s ease;
+}
+
+.forum-topic-item:hover {
+    background-color: #e9ecef;
+    border-left-color: #28a745; /* Darker green on hover */
+}
+
+/* Boutons */
+.btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+/* Pied de page */
+footer {
+    background-color: #212529;
+    color: #fff;
+}
+
+footer a {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #4CAF50;
+}
+
+/* Animations (Animate.css - à importer si vous voulez plus d'options) */
+/* Pour utiliser Animate.css, ajoutez ceci dans votre <head> en plus de votre CSS: */
+/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> */
+
+/* Exemple d'animation personnalisée pour les cartes */
+.feature-card[data-animation="pulse"]:hover {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Animation pour les titres de section au scroll (nécessite JS) */
+.section-title.animated {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section-title.animated.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Styles pour les modals (ajustement si nécessaire) */
+.modal-header {
+    background-color: #4CAF50;
+    color: white;
+}
+.modal-header .btn-close {
+    filter: invert(1); /* Pour que la croix de fermeture soit visible sur fond sombre */
+}
